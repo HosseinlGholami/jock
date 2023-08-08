@@ -2,8 +2,9 @@
 
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from src.api import jocks
 
-from src.api import notes, ping
+# from src.api import ping
 from src.db import engine, metadata, database
 
 import os
@@ -39,5 +40,4 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
-app.include_router(ping.router)
-app.include_router(notes.router, prefix="/notes", tags=["notes"])
+app.include_router(jocks.router, prefix="/jocks", tags=["jock-crud"])

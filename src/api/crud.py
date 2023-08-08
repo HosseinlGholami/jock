@@ -1,35 +1,38 @@
-from src.api.models import NoteSchema
-from src.db import notes, database
+from src.api.models import JockSchema
+from src.db import jocks, database
 from datetime import datetime as dt
 
 
-async def post(payload: NoteSchema):
+async def post(payload: JockSchema):
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
-    query = notes.insert().values(title=payload.title,
-                                  description=payload.description, completed=payload.completed, created_date=created_date)
+    query = jocks.insert().values(author=payload.author,
+                                  text=payload.text, approved=payload.approved,
+                                  created_date=created_date)
     return await database.execute(query=query)
 
 
 async def get(id: int):
-    query = notes.select().where(id == notes.c.id)
+    query = jocks.select().where(id == jocks.c.id)
     return await database.fetch_one(query=query)
 
 
 async def get_all():
-    query = notes.select()
+    query = jocks.select()
     return await database.fetch_all(query=query)
 
 
-async def put(id: int, payload=NoteSchema):
+async def put(id: int, payload=JockSchema):
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     query = (
-        notes.update().where(id == notes.c.id).values(title=payload.title,
-                                                      description=payload.description, completed=payload.completed, created_date=created_date)
-        .returning(notes.c.id)
+        jocks.update().where(id == jocks.c.id).values(author=payload.author,
+                                                      text=payload.text,
+                                                      approved=payload.approved,
+                                                      created_date=created_date)
+        # .returning(jocks.c.id)
     )
     return await database.execute(query=query)
 
 
 async def delete(id: int):
-    query = notes.delete().where(id == notes.c.id)
+    query = jocks.delete().where(id == jocks.c.id)
     return await database.execute(query=query)
