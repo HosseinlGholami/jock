@@ -28,7 +28,6 @@ async def put(id: int, payload=JockSchema):
                                                       text=payload.text,
                                                       approved=payload.approved,
                                                       created_date=created_date)
-        # .returning(jocks.c.id)
     )
     return await database.execute(query=query)
 

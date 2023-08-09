@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from src.api import jocks
+from fastapi.responses import FileResponse
 
 # from src.api import ping
 from src.db import engine, metadata, database
@@ -41,3 +42,8 @@ async def shutdown():
     await database.disconnect()
 
 app.include_router(jocks.router, prefix="/jocks", tags=["jock-crud"])
+
+
+@app.get("/")
+async def read_root():
+    return FileResponse("static/home.html")

@@ -27,7 +27,7 @@ jocks = Table(
     Column("text", String(300)),
     Column("approved", String(8), default="False"),
     Column("created_date", String(50), default=dt.now(
-        tz("Asia/Tehran")).strftime("%Y-%m-%d %H:%M"))
+        tz("Asia/Tehran")).strftime("%Y-%m-%d %H:%M")),
     # Column("likes", Integer, default=0, nullable=False),
     # Column("dislikes", Integer, default=0, nullable=False),
 )

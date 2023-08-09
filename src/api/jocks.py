@@ -1,3 +1,4 @@
+import random
 from src.api import crud
 from src.api.models import JockDB, JockSchema
 from fastapi import APIRouter, HTTPException, Path
@@ -19,6 +20,14 @@ async def create_jocks(payload: JockSchema):
         "created_date": created_date,
     }
     return response_object
+
+
+@router.get("/random/", response_model=JockDB)
+async def get_random():
+    jock = await crud.get_all()
+    if not jock:
+        raise HTTPException(status_code=404, detail="jock not found")
+    return jock[random.randint(0, len(jock)-1)]
 
 
 @router.get("/{id}/", response_model=JockDB)
