@@ -6,13 +6,10 @@ from src.api import jocks
 from fastapi.responses import FileResponse
 
 # from src.api import ping
-from src.db import engine, metadata, database
+from src.db import database
 
 import os
 print(f"==============================>>>>>{os.environ['LOCAL_IP']}")
-
-metadata.create_all(engine)
-
 
 app = FastAPI()
 

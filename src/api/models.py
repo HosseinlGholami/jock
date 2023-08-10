@@ -9,6 +9,8 @@ class JockSchema(BaseModel):
     text: str = Field(..., min_length=3, max_length=300)
     approved: bool = "False"
     created_date: str = dt.now(tz("Asia/Tehran")).strftime("%Y-%m-%d %H:%M")
+    # likes: int = Field()
+    # dislikes: int = Field()
 
 
 class JockDB(JockSchema):

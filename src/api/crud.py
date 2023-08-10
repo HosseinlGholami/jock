@@ -7,7 +7,9 @@ async def post(payload: JockSchema):
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     query = jocks.insert().values(author=payload.author,
                                   text=payload.text, approved=payload.approved,
-                                  created_date=created_date)
+                                  created_date=created_date,)
+    #   likes=payload.likes,
+    #   dislikes=payload.dislikes)
     return await database.execute(query=query)
 
 
@@ -27,7 +29,9 @@ async def put(id: int, payload=JockSchema):
         jocks.update().where(id == jocks.c.id).values(author=payload.author,
                                                       text=payload.text,
                                                       approved=payload.approved,
-                                                      created_date=created_date)
+                                                      created_date=created_date,)
+        #   likes=payload.likes,
+        #   dislikes=payload.dislikes)
     )
     return await database.execute(query=query)
 

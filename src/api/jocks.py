@@ -18,6 +18,8 @@ async def create_jocks(payload: JockSchema):
         "text": payload.text,
         "approved": payload.approved,
         "created_date": created_date,
+        # "likes": 0,
+        # "dislikes": 0,
     }
     return response_object
 
@@ -55,6 +57,8 @@ async def update_jock(payload: JockSchema, id: int = Path(..., gt=0)):
         "author": payload.author,
         "text": payload.text,
         "approved": payload.approved,
+        # "likes": payload.likes,
+        # "dislikes": payload.likes,
     }
     return response_object
 
