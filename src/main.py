@@ -1,17 +1,17 @@
 # src/main.py
 
+import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from src.api import jocks
-from fastapi.responses import FileResponse
+from src.api import users, scales, weight
 
-# from src.api import ping
 from src.db import database
 
-import os
-print(f"==============================>>>>>{os.environ['LOCAL_IP']}")
+from src import ip
+MY_IP = ip.get_local_ip()
 
 app = FastAPI()
+
 
 origins = [
     "http://localhost",
@@ -38,9 +38,6 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
-app.include_router(jocks.router, prefix="/jocks", tags=["jock-crud"])
-
-
-@app.get("/")
-async def read_root():
-    return FileResponse("static/home.html")
+app.include_router(scales.router, prefix="/scales", tags=["scales-crud"])
+app.include_router(users.router,  prefix="/users", tags=["users-crud"])
+app.include_router(weight.router,  prefix="/weight", tags=["weight-crud"])

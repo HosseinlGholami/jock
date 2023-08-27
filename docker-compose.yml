@@ -9,9 +9,9 @@ services:
       - "8002:8002"
     volumes:
       - .:/src
-    command: sh -c " sleep 30; alembic revision --autogenerate -m "initial"; alembic upgrade head ;echo app-started ;uvicorn src.main:app --reload --workers 1 --host  "0.0.0.0" --port "8002""
+    command: sh -c " sleep 30; alembic revision --autogenerate -m "initial"; alembic upgrade head ;echo app-started ;uvicorn src.main:app --reload --workers 1 --host  "0.0.0.0" --port "8002"" #
     environment:
-      - LOCAL_IP=172.20.47.89
+      - JWT_SECRET=digikalajwtsecret123456
   db:
     image: registry-git.digikala.com/digi-automation/server-codes/ci-cd-boilerplate/mysql:latest
     container_name: mysql_db
@@ -22,7 +22,7 @@ services:
       - ./data/db:/var/lib/mysql
     # - ./mysql_image:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: jock-app-db
+      MYSQL_DATABASE: joke-app-db
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "root"

@@ -1,17 +1,58 @@
-from pydantic import BaseModel, Field, NonNegativeInt
+from pydantic import BaseModel, Field, NonNegativeInt, validator
 from datetime import datetime as dt
 from pytz import timezone as tz
+from typing import Optional
+from datetime import datetime
+from src.db import Role
 
 
-class JockSchema(BaseModel):
-    # additional validation for the inputs
-    author: str = Field(..., min_length=3, max_length=50)
-    text: str = Field(..., min_length=3, max_length=300)
-    approved: bool = "False"
-    created_date: str = dt.now(tz("Asia/Tehran")).strftime("%Y-%m-%d %H:%M")
-    # likes: int = Field()
-    # dislikes: int = Field()
+class scalesSchema(BaseModel):
+    name: str
 
 
-class JockDB(JockSchema):
-    id: int
+class scalesInAdmin(scalesSchema):
+    mac: str
+
+
+class scalesIn(scalesSchema):
+    gate_id: Optional[int]
+
+
+class scalesOut(scalesSchema):
+    gate_id: Optional[int]
+
+
+class scales_weightSchema(BaseModel):
+    scale_id: int
+    name: str
+    weight: str
+
+
+class userSchema(BaseModel):
+    user:  str
+
+
+class userDBIn(userSchema):
+    pswd: str
+    role: Role
+    token: str
+
+
+class userDBOut(userSchema):
+    pswd: str
+    role: str
+
+
+class userSignOut(userSchema):
+    token: str
+
+
+class userSignIn(userSchema):
+    pswd: str
+
+
+class weightIn(userSchema):
+    scale_id: int
+    user_id: int
+    weight: int
+    timestamp: datetime
